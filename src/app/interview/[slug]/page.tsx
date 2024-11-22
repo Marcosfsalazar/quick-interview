@@ -1,4 +1,4 @@
-import ChatWindow from '@/components/ChatWindow/ChatWindow';
+import ChatWindowContainer from '@/components/ChatWindow/ChatWindowContainer';
 import { loadJobData } from '@/utils/loadJobData';
 
 export default function Page({ params }: { params: { slug: string } }) {
@@ -8,7 +8,7 @@ export default function Page({ params }: { params: { slug: string } }) {
 
   return (
     <main className="h-screen flex justify-center py-8 px-2">
-      <ChatWindow data={jobData} />
+      <ChatWindowContainer data={jobData} />
     </main>
   );
 }
