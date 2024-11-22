@@ -22,6 +22,16 @@
     "Precisamos de um desenvolvedor com perfil técnico forte e que se comunique com clareza. Avaliar a clareza de cada resposta do usuário"
   ],
   "seniorityLevel": ["mid", "senior"],
+  "complianceQuestions": [
+    {
+      "question": "você esta de acordo com o range salarial dessa vaga?",
+      "options": ["yes", "no"]
+    },
+    {
+      "question": "tem preferência por um modelo de contratação?",
+      "options": ["CLT", "PJ", "ambos"]
+    }
+  ],
   "questions": [
     {
       "question": "Conte-nos sobre um projeto em que você utilizou React, Next.js e Tailwind CSS. Quais foram os principais desafios técnicos que você enfrentou e como os solucionou?",
