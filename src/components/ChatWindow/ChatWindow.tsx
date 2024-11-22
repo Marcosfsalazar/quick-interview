@@ -1,6 +1,7 @@
 import { MessageType } from '@/types';
 import { Message } from '../Message';
 import { Input } from '../Input/Index';
+import { useEffect, useRef } from 'react';
 
 interface ChatWindowProps {
   messages: MessageType[];
@@ -15,9 +16,15 @@ const ChatWindow = ({
   handleOptionSelect,
   handleAudioRecorded,
 }: ChatWindowProps) => {
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+
   return (
     <div className="container flex flex-col py-8 relative">
-      <div className="flex flex-col gap-4 mb-24">
+      <div className="flex flex-col gap-4 mb-24 overflow-y-auto">
         {messages.map((msg, index) => (
           <Message.Root
             key={index}
