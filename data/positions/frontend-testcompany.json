@@ -1,0 +1,47 @@
+{
+  "company": "testCompany",
+  "role": "frontend developer",
+  "area": "tecnologia",
+  "job_description": "Estamos contratando! Frontend Developer (React + Next.js)\n\nQuem somos?\nSomos uma startup inovadora. Nosso objetivo é transformar a indústria farmacêutica por meio de tecnologia de ponta e oferecer experiências incríveis aos nossos usuários!\n\nModelo: PJ/CLT\nHorário: Flexível\n\nO que você vai fazer no time?\nDesenvolver interfaces modernas e responsivas utilizando React, Next.js e Tailwind CSS.\nConsumir APIs de maneira eficiente e gerenciar estados com React Query.\nColaborar com designers e outros desenvolvedores para garantir uma experiência de usuário incrível.\nGarantir qualidade e performance do código através de boas práticas, revisões de código e testes.\nParticipar ativamente na evolução do produto, propondo melhorias e implementando soluções inovadoras.\n\nO que buscamos em você?\nExperiência sólida com React e Next.js.\nConhecimento avançado de Tailwind CSS para estilização rápida e eficaz.\nExperiência com React Query para gerenciamento de dados assíncronos.\nFamiliaridade com conceitos como SSR/SSG, componentização eficiente, e boas práticas em frontend.\nCapacidade de escrever código limpo, organizado e reutilizável.\nBoa comunicação e habilidade de trabalhar em equipe.\nConhecimento de ferramentas de versionamento (como Git) e integração contínua.\n\nDiferenciais (não obrigatórios):\nExperiência com TypeScript.\nConhecimento de testes com Jest ou React Testing Library.\nExperiência com sistemas de design ou criação de bibliotecas de componentes.\nInteresse ou experiência com performance e otimização em frontends.\n\nO que oferecemos?\nSalário competitivo de acordo com o mercado.\nAmbiente descontraído, colaborativo e que incentiva o aprendizado constante.\nOportunidades de crescimento na empresa.\nProjetos desafiadores e impactantes.\nFlexibilidade para você organizar sua rotina e entregar o melhor.\n\nInteressado(a)?\nEnvie seu currículo e portfólio (ou GitHub) para [email@example.com] ou aplique diretamente aqui no LinkedIn. Caso conheça alguém que seria perfeito para essa vaga, compartilhe com eles!\n\nVamos juntos construir experiências digitais incríveis!",
+  "skills": [
+    "javascript",
+    "typescript",
+    "react",
+    "next.js",
+    "node.js",
+    "tailwind",
+    "CSS",
+    "react query",
+    "responsividade",
+    "git",
+    "github",
+    "jest",
+    "testes unitários"
+  ],
+  "aditionalContext": [
+    "Precisamos de um desenvolvedor com perfil técnico forte e que se comunique com clareza. Avaliar a clareza de cada resposta do usuário"
+  ],
+  "seniorityLevel": ["mid", "senior"],
+  "questions": [
+    {
+      "question": "Conte-nos sobre um projeto em que você utilizou React, Next.js e Tailwind CSS. Quais foram os principais desafios técnicos que você enfrentou e como os solucionou?",
+      "evaluate": "familiaridade com Next, react e tailwind."
+    },
+    {
+      "question": "Como você costuma gerenciar estados em projetos React?",
+      "evaluate": "proficiência ao lidar com estados em react."
+    },
+    {
+      "question": "Como você aborda a responsividade e a acessibilidade ao desenvolver interfaces? Fale sobre um caso em que precisou implementar uma solução criativa para adaptar um layout a diferentes dispositivos.",
+      "evaluate": "Compreensão de práticas modernas de responsividade."
+    },
+    {
+      "question": "Descreva uma situação em que precisou trabalhar com designers ou outros desenvolvedores para resolver um problema. Como você garantiu que todos estivessem alinhados e que o resultado final fosse de alta qualidade?",
+      "evaluate": "Habilidades de trabalho em equipe."
+    },
+    {
+      "question": "Nos conte sobre um problema técnico inesperado que você encontrou durante o desenvolvimento de um projeto. Como você identificou a causa raiz e o que fez para resolvê-lo? Você propôs ou implementou alguma solução inovadora?",
+      "evaluate": "Habilidade de identificar e resolver problemas técnicos. Capacidade de pensar de forma criativa ou inovadora."
+    }
+  ]
+}
