@@ -22,6 +22,15 @@ const chatReducer = (state: ChatState, action: ChatAction): ChatState => {
   switch (action.type) {
     case ChatActionType.ADD_MESSAGE:
       return { ...state, messages: [...state.messages, action.payload] };
+    case ChatActionType.UPDATE_MESSAGE:
+      const updatedMessages = state.messages.map((msg, idx) => {
+        if (idx === action.payload.index) {
+          return { ...msg, ...action.payload.message };
+        } else {
+          return msg;
+        }
+      });
+      return { ...state, messages: updatedMessages };
     case ChatActionType.SET_CURRENT_STEP:
       return { ...state, currentStep: action.payload };
     case ChatActionType.ADD_COMPLIANCE_ANSWER:
@@ -77,12 +86,23 @@ export const useChat = (data: JobDescriptionProps) => {
     }
   }, [data]);
 
-  const handleOptionSelect = (option: string) => {
+  const handleOptionSelect = (option: string, messageIndex: number) => {
     const userMessage: MessageType = {
       sender: 'user',
       content: option,
     };
     addMessage(userMessage);
+
+    dispatch({
+      type: ChatActionType.UPDATE_MESSAGE,
+      payload: {
+        index: messageIndex,
+        message: {
+          optionsDisabled: true,
+          selectedOption: option,
+        },
+      },
+    });
 
     if (state.currentStep === 0) {
       if (option.toLowerCase() === 'sim') {

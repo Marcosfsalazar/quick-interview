@@ -25,7 +25,6 @@ const InputAudio = ({ onRecorded }: InputAudioProps) => {
       };
 
       mediaRecorderRef.current.onstop = () => {
-        console.log('MediaRecorder stopped');
         const blob = new Blob(chunks.current, { type: 'audio/webm' });
         chunks.current = [];
         onRecorded(blob);
@@ -38,7 +37,6 @@ const InputAudio = ({ onRecorded }: InputAudioProps) => {
 
       mediaRecorderRef.current.start();
       setRecording(true);
-      console.log('Recording started');
     } catch (err) {
       console.error('Error accessing microphone:', err);
     }
@@ -51,7 +49,6 @@ const InputAudio = ({ onRecorded }: InputAudioProps) => {
     ) {
       mediaRecorderRef.current.stop();
       setRecording(false);
-      console.log('Recording stopped');
     } else {
       console.warn('MediaRecorder is not initialized or already stopped.');
     }

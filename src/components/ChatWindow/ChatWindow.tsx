@@ -6,7 +6,7 @@ import { useEffect, useRef } from 'react';
 interface ChatWindowProps {
   messages: MessageType[];
   currentStep: number;
-  handleOptionSelect: (option: string) => void;
+  handleOptionSelect: (option: string, messageIndex: number) => void;
   handleAudioRecorded: (audioBlob: Blob) => void;
 }
 
@@ -38,7 +38,10 @@ const ChatWindow = ({
                   {msg.options.map((option) => (
                     <Message.Button
                       key={option}
-                      onClick={() => handleOptionSelect(option)}
+                      disabled={msg.optionsDisabled}
+                      onClick={() => {
+                        handleOptionSelect(option, index);
+                      }}
                     >
                       {option}
                     </Message.Button>
