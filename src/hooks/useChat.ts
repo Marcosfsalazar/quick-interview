@@ -177,9 +177,12 @@ export const useChat = (data: JobDescriptionProps) => {
   };
 
   const handleAudioRecorded = async (audioBlob: Blob) => {
+    const audioUrl = URL.createObjectURL(audioBlob);
+
     const userMessage: MessageType = {
       sender: 'user',
       content: 'Resposta em áudio recebida.',
+      audioUrl,
     };
     addMessage(userMessage);
 

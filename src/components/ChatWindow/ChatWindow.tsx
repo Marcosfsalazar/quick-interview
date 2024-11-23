@@ -17,9 +17,23 @@ const ChatWindow = ({
   handleAudioRecorded,
 }: ChatWindowProps) => {
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
+  const audioUrlsRef = useRef<string[]>([]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    const newAudioUrls = messages
+      .filter((msg) => msg.audioUrl)
+      .map((msg) => msg.audioUrl!)
+      .filter((url) => !audioUrlsRef.current.includes(url));
+
+    audioUrlsRef.current.push(...newAudioUrls);
+
+    return () => {
+      audioUrlsRef.current.forEach((url) => {
+        URL.revokeObjectURL(url);
+      });
+      audioUrlsRef.current = [];
+    };
   }, [messages]);
 
   return (
@@ -32,7 +46,7 @@ const ChatWindow = ({
           >
             <Message.Icon src={`/icons/${msg.sender}.png`} />
             <div className="flex flex-col gap-4">
-              <Message.Content message={msg.content} />
+              <Message.Content message={msg.content} audioUrl={msg.audioUrl} />
               {msg.options && (
                 <Message.Action>
                   {msg.options.map((option) => (

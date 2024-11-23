@@ -25,6 +25,7 @@ export type MessageType = {
   isAudioResponse?: boolean;
   selectedOption?: string;
   optionsDisabled?: boolean;
+  audioUrl?: string;
 };
 
 export type ChatAction =
