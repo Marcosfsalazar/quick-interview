@@ -1,4 +1,4 @@
-import { useReducer, useRef, useEffect } from 'react';
+import { useReducer, useRef, useEffect, useCallback } from 'react';
 import {
   ChatAction,
   CHAT_ACTION as ChatActionType,
@@ -55,6 +55,7 @@ const chatReducer = (state: ChatState, action: ChatAction): ChatState => {
 
 export const useChat = (data: JobDescriptionProps) => {
   const [state, dispatch] = useReducer(chatReducer, initialState);
+  const hasEvaluatedResponses = useRef(false);
   const isInitialized = useRef(false);
 
   const addMessage = (message: MessageType) =>
@@ -86,6 +87,62 @@ export const useChat = (data: JobDescriptionProps) => {
       isInitialized.current = true;
     }
   }, [data]);
+
+  const evaluateResponses = useCallback(async () => {
+    const requestData = {
+      masterPrompt: MASTER_PROMPT,
+      jobDescription: data,
+      questions: state.questionResponses,
+    };
+    console.log('Evaluating Responses:', requestData);
+
+    try {
+      const response = await fetch('/api/evaluate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestData),
+      });
+
+      if (!response.ok) {
+        console.error('Failed to evaluate responses!');
+        return;
+      }
+
+      const result = await response.json();
+
+      const botMessage: MessageType = {
+        sender: 'bot',
+        content: result.evaluation,
+      };
+      addMessage(botMessage);
+    } catch (error) {
+      console.error('Error evaluating responses:', error);
+    }
+  }, [data, state.questionResponses, addMessage]);
+
+  useEffect(() => {
+    if (state.currentStep !== 3) {
+      hasEvaluatedResponses.current = false;
+    }
+  }, [state.currentStep]);
+
+  useEffect(() => {
+    if (
+      state.currentStep === 3 &&
+      state.questionResponses.length === data.questions.length &&
+      !hasEvaluatedResponses.current
+    ) {
+      hasEvaluatedResponses.current = true;
+      evaluateResponses();
+    }
+  }, [
+    state.currentStep,
+    state.questionResponses.length,
+    data.questions.length,
+    evaluateResponses,
+  ]);
 
   const handleOptionSelect = (option: string, messageIndex: number) => {
     const userMessage: MessageType = {
@@ -157,34 +214,6 @@ export const useChat = (data: JobDescriptionProps) => {
     }
   };
 
-  const evaluateResponses = async () => {
-    const requestData = {
-      masterPrompt: MASTER_PROMPT,
-      jobDescription: data,
-      questions: state.questionResponses,
-    };
-    const response = await fetch('/api/evaluate', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(requestData),
-    });
-
-    if (!response.ok) {
-      console.error('Failed to evaluate responses!');
-      return;
-    }
-
-    const result = await response.json();
-
-    const botMessage: MessageType = {
-      sender: 'bot',
-      content: result.evaluation,
-    };
-    addMessage(botMessage);
-  };
-
   const askNextTechnicalQuestion = async (index: number) => {
     if (index < data.questions.length) {
       setCurrentQuestionIndex(index);
@@ -202,11 +231,12 @@ export const useChat = (data: JobDescriptionProps) => {
         content: 'Obrigado por participar da entrevista!',
       };
       addMessage(botMessage);
-      await evaluateResponses();
     }
   };
 
   const handleAudioRecorded = async (audioBlob: Blob) => {
+    const currentQuestionIndex = state.currentQuestionIndex;
+
     const audioUrl = URL.createObjectURL(audioBlob);
 
     const userMessage: MessageType = {
@@ -218,7 +248,6 @@ export const useChat = (data: JobDescriptionProps) => {
 
     const transcription = await transcribeAudio(audioBlob);
 
-    const currentQuestionIndex = state.currentQuestionIndex;
     const question = data.questions[currentQuestionIndex];
 
     const questionResponse: QuestionResponse = {
