@@ -8,6 +8,7 @@ import {
   QuestionResponse,
   JobDescriptionProps,
 } from '@/types';
+import { MASTER_PROMPT } from '@/constants/prompts';
 
 const initialState: ChatState = {
   messages: [],
@@ -156,7 +157,35 @@ export const useChat = (data: JobDescriptionProps) => {
     }
   };
 
-  const askNextTechnicalQuestion = (index: number) => {
+  const evaluateResponses = async () => {
+    const requestData = {
+      masterPrompt: MASTER_PROMPT,
+      jobDescription: data,
+      questions: state.questionResponses,
+    };
+    const response = await fetch('/api/evaluate', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestData),
+    });
+
+    if (!response.ok) {
+      console.error('Failed to evaluate responses!');
+      return;
+    }
+
+    const result = await response.json();
+
+    const botMessage: MessageType = {
+      sender: 'bot',
+      content: result.evaluation,
+    };
+    addMessage(botMessage);
+  };
+
+  const askNextTechnicalQuestion = async (index: number) => {
     if (index < data.questions.length) {
       setCurrentQuestionIndex(index);
       const question = data.questions[index];
@@ -173,6 +202,7 @@ export const useChat = (data: JobDescriptionProps) => {
         content: 'Obrigado por participar da entrevista!',
       };
       addMessage(botMessage);
+      await evaluateResponses();
     }
   };
 
@@ -207,7 +237,22 @@ export const useChat = (data: JobDescriptionProps) => {
 
   const transcribeAudio = async (audioBlob: Blob): Promise<string> => {
     if (!audioBlob) return '';
-    return 'Transcrição de exemplo da resposta em áudio.';
+    const formData = new FormData();
+    formData.append('file', audioBlob, 'audio.webm');
+
+    const response = await fetch('/api/transcribe', {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (!response.ok) {
+      console.error('Failed to transcribe audio');
+      return '';
+    }
+
+    const data = await response.json();
+
+    return data.transcription.text || '';
   };
 
   return {
