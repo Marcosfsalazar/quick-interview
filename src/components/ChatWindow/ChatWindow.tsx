@@ -53,8 +53,16 @@ const ChatWindow = ({
                 <Message.TypingIndicator />
               ) : (
                 <Message.Content
+                  key={msg.content + index}
                   message={msg.content}
                   audioUrl={msg.audioUrl}
+                  className={
+                    !msg.audioUrl
+                      ? msg.sender === 'bot'
+                        ? 'message-bot'
+                        : 'message-user'
+                      : ''
+                  }
                 />
               )}
               {msg.options && (

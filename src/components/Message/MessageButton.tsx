@@ -14,7 +14,7 @@ const MessageButton = ({
   return (
     <button
       {...buttonProps}
-      className="border-2 px-2"
+      className="border border-appAquamarine px-2 rounded-sm text-appPurple font-semibold bg-[lightGreen]"
       disabled={disabled}
       onClick={onClick}
     >

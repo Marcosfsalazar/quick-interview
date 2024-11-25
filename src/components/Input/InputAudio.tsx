@@ -56,7 +56,7 @@ const InputAudio = ({ onRecorded }: InputAudioProps) => {
 
   return (
     <button
-      className={`border rounded-full p-2 ${recording ? 'bg-red-400' : ''}`}
+      className={`rounded-full p-2 ${recording ? 'bg-red-400' : 'bg-appGreen'}`}
       onClick={recording ? stopRecording : startRecording}
     >
       <Image
