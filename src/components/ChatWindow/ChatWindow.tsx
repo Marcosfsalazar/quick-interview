@@ -21,6 +21,9 @@ const ChatWindow = ({
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+
+  useEffect(() => {
     const newAudioUrls = messages
       .filter((msg) => msg.audioUrl)
       .map((msg) => msg.audioUrl!)
@@ -35,6 +38,7 @@ const ChatWindow = ({
       audioUrlsRef.current = [];
     };
   }, [messages]);
+
   return (
     <div className="container flex flex-col py-8 relative">
       <div className="flex flex-col gap-4 mb-24 overflow-y-auto">
@@ -71,6 +75,7 @@ const ChatWindow = ({
             </div>
           </Message.Root>
         ))}
+        <div ref={messagesEndRef} />
       </div>
       {currentStep === 2 && (
         <Input.Root>
