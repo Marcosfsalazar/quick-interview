@@ -1,4 +1,4 @@
-import { useReducer, useRef, useEffect, useCallback } from 'react';
+import { useReducer, useRef, useEffect } from 'react';
 import {
   ChatAction,
   CHAT_ACTION as ChatActionType,
@@ -9,6 +9,7 @@ import {
   JobDescriptionProps,
 } from '@/types';
 import { MASTER_PROMPT } from '@/constants/prompts';
+import { useMutation } from '@tanstack/react-query';
 
 const initialState: ChatState = {
   messages: [],
@@ -55,7 +56,6 @@ const chatReducer = (state: ChatState, action: ChatAction): ChatState => {
 
 export const useChat = (data: JobDescriptionProps) => {
   const [state, dispatch] = useReducer(chatReducer, initialState);
-  const hasEvaluatedResponses = useRef(false);
   const isInitialized = useRef(false);
 
   const addMessage = (message: MessageType) =>
@@ -88,15 +88,18 @@ export const useChat = (data: JobDescriptionProps) => {
     }
   }, [data]);
 
-  const evaluateResponses = useCallback(async () => {
-    const requestData = {
-      masterPrompt: MASTER_PROMPT,
-      jobDescription: data,
-      questions: state.questionResponses,
-    };
-    console.log('Evaluating Responses:', requestData);
+  const evaluateResponsesMutation = useMutation<
+    string,
+    Error,
+    QuestionResponse[]
+  >({
+    mutationFn: async (questionResponses) => {
+      const requestData = {
+        masterPrompt: MASTER_PROMPT,
+        jobDescription: data,
+        questions: questionResponses,
+      };
 
-    try {
       const response = await fetch('/api/evaluate', {
         method: 'POST',
         headers: {
@@ -106,43 +109,28 @@ export const useChat = (data: JobDescriptionProps) => {
       });
 
       if (!response.ok) {
-        console.error('Failed to evaluate responses!');
-        return;
+        throw new Error('Failed to evaluate responses!');
       }
 
       const result = await response.json();
-
+      return result.evaluation as string;
+    },
+    onSuccess: (evaluation: string) => {
       const botMessage: MessageType = {
         sender: 'bot',
-        content: result.evaluation,
+        content: evaluation,
       };
       addMessage(botMessage);
-    } catch (error) {
+    },
+    onError: (error: Error) => {
       console.error('Error evaluating responses:', error);
-    }
-  }, [data, state.questionResponses, addMessage]);
-
-  useEffect(() => {
-    if (state.currentStep !== 3) {
-      hasEvaluatedResponses.current = false;
-    }
-  }, [state.currentStep]);
-
-  useEffect(() => {
-    if (
-      state.currentStep === 3 &&
-      state.questionResponses.length === data.questions.length &&
-      !hasEvaluatedResponses.current
-    ) {
-      hasEvaluatedResponses.current = true;
-      evaluateResponses();
-    }
-  }, [
-    state.currentStep,
-    state.questionResponses.length,
-    data.questions.length,
-    evaluateResponses,
-  ]);
+      const botMessage: MessageType = {
+        sender: 'bot',
+        content: 'Desculpe, ocorreu um erro ao avaliar suas respostas.',
+      };
+      addMessage(botMessage);
+    },
+  });
 
   const handleOptionSelect = (option: string, messageIndex: number) => {
     const userMessage: MessageType = {
@@ -246,43 +234,71 @@ export const useChat = (data: JobDescriptionProps) => {
     };
     addMessage(userMessage);
 
-    const transcription = await transcribeAudio(audioBlob);
+    try {
+      const transcription =
+        await transcribeAudioMutation.mutateAsync(audioBlob);
 
-    const question = data.questions[currentQuestionIndex];
+      const question = data.questions[currentQuestionIndex];
 
-    const questionResponse: QuestionResponse = {
-      question: question.question,
-      evaluate: question.evaluate,
-      response: transcription,
-    };
+      const questionResponse: QuestionResponse = {
+        question: question.question,
+        evaluate: question.evaluate,
+        response: transcription,
+      };
 
-    dispatch({
-      type: ChatActionType.ADD_QUESTION_RESPONSE,
-      payload: questionResponse,
-    });
+      dispatch({
+        type: ChatActionType.ADD_QUESTION_RESPONSE,
+        payload: questionResponse,
+      });
 
-    askNextTechnicalQuestion(currentQuestionIndex + 1);
-  };
+      const updatedQuestionResponses = [
+        ...state.questionResponses,
+        questionResponse,
+      ];
 
-  const transcribeAudio = async (audioBlob: Blob): Promise<string> => {
-    if (!audioBlob) return '';
-    const formData = new FormData();
-    formData.append('file', audioBlob, 'audio.webm');
+      const nextIndex = currentQuestionIndex + 1;
 
-    const response = await fetch('/api/transcribe', {
-      method: 'POST',
-      body: formData,
-    });
+      if (nextIndex < data.questions.length) {
+        askNextTechnicalQuestion(nextIndex);
+      } else {
+        setCurrentStep(3);
+        const botMessage: MessageType = {
+          sender: 'bot',
+          content: 'Obrigado por participar da entrevista!',
+        };
+        addMessage(botMessage);
 
-    if (!response.ok) {
-      console.error('Failed to transcribe audio');
-      return '';
+        evaluateResponsesMutation.mutate(updatedQuestionResponses);
+      }
+    } catch (error) {
+      console.error('Error transcribing audio:', error);
+      const botMessage: MessageType = {
+        sender: 'bot',
+        content: 'Desculpe, ocorreu um erro ao transcrever seu áudio.',
+      };
+      addMessage(botMessage);
     }
-
-    const data = await response.json();
-
-    return data.transcription.text || '';
   };
+
+  const transcribeAudioMutation = useMutation<string, Error, Blob>({
+    mutationFn: async (audioBlob: Blob) => {
+      if (!audioBlob) return '';
+      const formData = new FormData();
+      formData.append('file', audioBlob, 'audio.webm');
+
+      const response = await fetch('/api/transcribe', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to transcribe audio');
+      }
+
+      const data = await response.json();
+      return data.transcription.text || '';
+    },
+  });
 
   return {
     state,
