@@ -17,14 +17,21 @@ export async function POST(request: Request) {
       { role: 'system', content: masterPrompt },
       {
         role: 'user',
-        content: `Job Description:\n${JSON.stringify(jobDescription, null, 2)}\n\nQuestions and Responses:\n${JSON.stringify(questions, null, 2)}`,
+        content: `Job Description:\n${JSON.stringify(jobDescription)}\n\nQuestions and Responses:\n${JSON.stringify(questions)}`,
       },
     ];
 
     const response = await generateText({
-      model: openai('gpt-4-turbo'),
+      model: openai('gpt-3.5-turbo'),
       messages,
     });
+
+    try {
+      JSON.parse(response.text);
+    } catch (error) {
+      console.error(error);
+      throw new Error('Invalid JSON response from OpenAI');
+    }
 
     return NextResponse.json({
       evaluation: response.text,

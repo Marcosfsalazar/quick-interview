@@ -116,11 +116,27 @@ export const useChat = (data: JobDescriptionProps) => {
       return result.evaluation as string;
     },
     onSuccess: (evaluation: string) => {
-      const botMessage: MessageType = {
-        sender: 'bot',
-        content: evaluation,
-      };
-      addMessage(botMessage);
+      try {
+        const evaluationData = JSON.parse(evaluation);
+        const { questions } = evaluationData;
+        if (Array.isArray(questions)) {
+          questions.forEach((q) => {
+            const questionMessage: MessageType = {
+              sender: 'bot',
+              content: `**Pergunta:** ${q.question}\n**Feedback:** ${q.user_feedback}`,
+            };
+            addMessage(questionMessage);
+          });
+        }
+      } catch (error) {
+        console.error('Error parsing evaluation JSON:', error);
+        const botMessage: MessageType = {
+          sender: 'bot',
+          content:
+            'Desculpe, ocorreu um erro ao processar a avaliação das suas respostas.',
+        };
+        addMessage(botMessage);
+      }
     },
     onError: (error: Error) => {
       console.error('Error evaluating responses:', error);
