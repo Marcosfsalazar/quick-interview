@@ -49,6 +49,11 @@ const chatReducer = (state: ChatState, action: ChatAction): ChatState => {
       return { ...state, options: action.payload };
     case ChatActionType.SET_CURRENT_QUESTION_INDEX:
       return { ...state, currentQuestionIndex: action.payload };
+    case ChatActionType.REMOVE_TYPING_INDICATOR:
+      return {
+        ...state,
+        messages: state.messages.filter((msg) => !msg.isTyping),
+      };
     default:
       return state;
   }
@@ -72,6 +77,19 @@ export const useChat = (data: JobDescriptionProps) => {
       type: ChatActionType.SET_CURRENT_QUESTION_INDEX,
       payload: index,
     });
+
+  const addTypingIndicator = () => {
+    const typingMessage: MessageType = {
+      sender: 'bot',
+      content: '',
+      isTyping: true,
+    };
+    dispatch({ type: ChatActionType.ADD_MESSAGE, payload: typingMessage });
+  };
+
+  const removeTypingIndicator = () => {
+    dispatch({ type: ChatActionType.REMOVE_TYPING_INDICATOR });
+  };
 
   useEffect(() => {
     if (!isInitialized.current) {
@@ -116,9 +134,11 @@ export const useChat = (data: JobDescriptionProps) => {
       return result.evaluation as string;
     },
     onSuccess: (evaluation: string) => {
+      removeTypingIndicator();
       try {
         const evaluationData = JSON.parse(evaluation);
         const { questions } = evaluationData;
+        console.log('HERE');
         if (Array.isArray(questions)) {
           questions.forEach((q) => {
             const questionMessage: MessageType = {
@@ -139,6 +159,7 @@ export const useChat = (data: JobDescriptionProps) => {
       }
     },
     onError: (error: Error) => {
+      removeTypingIndicator();
       console.error('Error evaluating responses:', error);
       const botMessage: MessageType = {
         sender: 'bot',
@@ -240,7 +261,6 @@ export const useChat = (data: JobDescriptionProps) => {
 
   const handleAudioRecorded = async (audioBlob: Blob) => {
     const currentQuestionIndex = state.currentQuestionIndex;
-
     const audioUrl = URL.createObjectURL(audioBlob);
 
     const userMessage: MessageType = {
@@ -250,10 +270,11 @@ export const useChat = (data: JobDescriptionProps) => {
     };
     addMessage(userMessage);
 
+    addTypingIndicator();
+
     try {
       const transcription =
         await transcribeAudioMutation.mutateAsync(audioBlob);
-
       const question = data.questions[currentQuestionIndex];
 
       const questionResponse: QuestionResponse = {
@@ -274,6 +295,8 @@ export const useChat = (data: JobDescriptionProps) => {
 
       const nextIndex = currentQuestionIndex + 1;
 
+      removeTypingIndicator();
+
       if (nextIndex < data.questions.length) {
         askNextTechnicalQuestion(nextIndex);
       } else {
@@ -284,10 +307,12 @@ export const useChat = (data: JobDescriptionProps) => {
         };
         addMessage(botMessage);
 
+        addTypingIndicator();
         evaluateResponsesMutation.mutate(updatedQuestionResponses);
       }
     } catch (error) {
       console.error('Error transcribing audio:', error);
+      removeTypingIndicator();
       const botMessage: MessageType = {
         sender: 'bot',
         content: 'Desculpe, ocorreu um erro ao transcrever seu áudio.',

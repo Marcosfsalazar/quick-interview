@@ -25,3 +25,52 @@ body {
     text-wrap: balance;
   }
 }
+
+.dot-pulse {
+  position: relative;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: #333;
+  animation: dotPulse 1.5s infinite linear;
+  animation-delay: 0.25s;
+}
+.dot-pulse::before,
+.dot-pulse::after {
+  content: '';
+  position: absolute;
+  top: 0;
+}
+.dot-pulse::before {
+  left: -15px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: #333;
+  animation: dotPulse 1.5s infinite linear;
+  animation-delay: 0s;
+}
+.dot-pulse::after {
+  left: 15px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: #333;
+  animation: dotPulse 1.5s infinite linear;
+  animation-delay: 0.5s;
+}
+
+@keyframes dotPulse {
+  0% {
+    transform: scale(0);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0);
+    opacity: 0.7;
+  }
+}

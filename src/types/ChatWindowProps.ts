@@ -16,6 +16,7 @@ export enum CHAT_ACTION {
   ADD_QUESTION_RESPONSE = 'ADD_QUESTION_RESPONSE',
   SET_OPTIONS = 'SET_OPTIONS',
   SET_CURRENT_QUESTION_INDEX = 'SET_CURRENT_QUESTION_INDEX',
+  REMOVE_TYPING_INDICATOR = 'REMOVE_TYPING_INDICATOR',
 }
 
 export type MessageType = {
@@ -26,6 +27,7 @@ export type MessageType = {
   selectedOption?: string;
   optionsDisabled?: boolean;
   audioUrl?: string;
+  isTyping?: boolean;
 };
 
 export type ChatAction =
@@ -38,7 +40,8 @@ export type ChatAction =
   | { type: CHAT_ACTION.ADD_COMPLIANCE_ANSWER; payload: ComplianceAnswer }
   | { type: CHAT_ACTION.ADD_QUESTION_RESPONSE; payload: QuestionResponse }
   | { type: CHAT_ACTION.SET_OPTIONS; payload: string[] | null }
-  | { type: CHAT_ACTION.SET_CURRENT_QUESTION_INDEX; payload: number };
+  | { type: CHAT_ACTION.SET_CURRENT_QUESTION_INDEX; payload: number }
+  | { type: CHAT_ACTION.REMOVE_TYPING_INDICATOR };
 
 export interface ChatState {
   messages: MessageType[];

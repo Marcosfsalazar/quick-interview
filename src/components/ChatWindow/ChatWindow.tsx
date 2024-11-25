@@ -35,7 +35,6 @@ const ChatWindow = ({
       audioUrlsRef.current = [];
     };
   }, [messages]);
-
   return (
     <div className="container flex flex-col py-8 relative">
       <div className="flex flex-col gap-4 mb-24 overflow-y-auto">
@@ -46,7 +45,14 @@ const ChatWindow = ({
           >
             <Message.Icon src={`/icons/${msg.sender}.png`} />
             <div className="flex flex-col gap-4">
-              <Message.Content message={msg.content} audioUrl={msg.audioUrl} />
+              {msg.isTyping ? (
+                <Message.TypingIndicator />
+              ) : (
+                <Message.Content
+                  message={msg.content}
+                  audioUrl={msg.audioUrl}
+                />
+              )}
               {msg.options && (
                 <Message.Action>
                   {msg.options.map((option) => (
