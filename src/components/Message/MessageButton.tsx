@@ -14,7 +14,7 @@ const MessageButton = ({
   return (
     <button
       {...buttonProps}
-      className="border border-appAquamarine px-2 rounded-sm text-appPurple font-semibold bg-[lightGreen]"
+      className={`border border-appAquamarine px-2 rounded-sm text-appPurple font-semibold bg-[lightGreen] ${!disabled && 'hover:highlight hover:text-[lightGreen]'}`}
       disabled={disabled}
       onClick={onClick}
     >

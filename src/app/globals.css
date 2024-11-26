@@ -131,7 +131,7 @@ body {
   .message-bot {
     border-left: 4px solid;
     border-color: var(--appLightGreen);
-    color: var(--appGreen);
+    color: var(--appLightGreen);
     background-color: rgba(255, 255, 255, 0.02);
     padding: 16px;
     border-radius: 8px;
