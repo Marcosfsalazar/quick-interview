@@ -138,7 +138,6 @@ export const useChat = (data: JobDescriptionProps) => {
       try {
         const evaluationData = JSON.parse(evaluation);
         const { questions } = evaluationData;
-        console.log('HERE');
         if (Array.isArray(questions)) {
           questions.forEach((q) => {
             const questionMessage: MessageType = {

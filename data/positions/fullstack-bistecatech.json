@@ -1,0 +1,60 @@
+{
+  "company": "Bistecha",
+  "role": "fullstack developer",
+  "area": "tecnologia",
+  "job_description": "Estamos contratando! Fullstack Developer (Node.js + Next.js)\n\nQuem somos?\nSomos uma startup inovadora. Nosso objetivo é transformar a indústria alimenticia por meio de tecnologia de ponta e oferecer experiências incríveis aos nossos usuários!\n\nModelo: PJ/CLT\nHorário: Flexível\n\nO que você vai fazer no time?\nDesenvolver aplicações robustas utilizando Node.js e Next.js para backend e frontend.\nImplementar APIs RESTful e GraphQL eficientes e escaláveis.\nGarantir performance e segurança no backend utilizando boas práticas.\nCriar interfaces modernas e responsivas com Next.js e Tailwind CSS.\nColaborar com designers e outros desenvolvedores para garantir uma experiência de usuário incrível.\nManter e otimizar sistemas já existentes para melhorar a performance e usabilidade.\nParticipar ativamente na evolução do produto, propondo melhorias e implementando soluções inovadoras.\n\nO que buscamos em você?\nExperiência sólida com Node.js e Next.js.\nConhecimento avançado de Tailwind CSS para estilização rápida e eficaz.\nFamiliaridade com bancos de dados (SQL e NoSQL).\nCapacidade de criar APIs escaláveis e seguras.\nConhecimento de SSR/SSG e boas práticas em desenvolvimento fullstack.\nCapacidade de escrever código limpo, organizado e reutilizável.\nBoa comunicação e habilidade de trabalhar em equipe.\nExperiência com ferramentas de versionamento (como Git) e integração contínua.\n\nDiferenciais (não obrigatórios):\nExperiência com TypeScript.\nConhecimento de testes automatizados com Jest ou Mocha.\nExperiência com ferramentas de CI/CD.\nFamiliaridade com Docker e Kubernetes.\nInteresse ou experiência em otimização de performance e segurança no backend.\n\nO que oferecemos?\nSalário competitivo de acordo com o mercado.\nAmbiente descontraído, colaborativo e que incentiva o aprendizado constante.\nOportunidades de crescimento na empresa.\nProjetos desafiadores e impactantes.\nFlexibilidade para você organizar sua rotina e entregar o melhor.\n\nInteressado(a)?\nEnvie seu currículo e portfólio (ou GitHub) para [email@example.com] ou aplique diretamente aqui no LinkedIn. Caso conheça alguém que seria perfeito para essa vaga, compartilhe com eles!\n\nVamos juntos construir experiências digitais incríveis!",
+  "skills": [
+    "javascript",
+    "typescript",
+    "react",
+    "next.js",
+    "node.js",
+    "tailwind",
+    "express",
+    "graphql",
+    "mongodb",
+    "postgresql",
+    "docker",
+    "CI/CD",
+    "git",
+    "github",
+    "jest",
+    "testes unitários"
+  ],
+  "aditionalContext": [
+    "Precisamos de um desenvolvedor com perfil técnico forte, boa capacidade de resolução de problemas e que se comunique com clareza. Avaliar a clareza de cada resposta do usuário."
+  ],
+  "seniorityLevel": ["mid", "senior"],
+  "complianceQuestions": [
+    {
+      "question": "Você está de acordo com o range salarial dessa vaga?",
+      "options": ["Sim", "Não"]
+    },
+    {
+      "question": "Tem preferência por um modelo de contratação?",
+      "options": ["CLT", "PJ", "Ambos"]
+    }
+  ],
+  "questions": [
+    {
+      "question": "Nos conte sobre um projeto em que você implementou APIs utilizando Node.js. Quais foram os principais desafios e como você os resolveu?",
+      "evaluate": "Familiaridade com Node.js e desenvolvimento backend."
+    },
+    {
+      "question": "Como você costuma lidar com autenticação e autorização em aplicações fullstack?",
+      "evaluate": "Compreensão de boas práticas de segurança e experiência com autenticação."
+    },
+    {
+      "question": "Nos conte sobre um caso em que você otimizou uma aplicação para melhorar a performance tanto no frontend quanto no backend. Quais foram as estratégias utilizadas?",
+      "evaluate": "Habilidade em otimização de performance fullstack."
+    },
+    {
+      "question": "Como você integra bancos de dados (SQL e NoSQL) em projetos Node.js? Fale sobre uma experiência prática.",
+      "evaluate": "Conhecimento de integração com bancos de dados e boas práticas."
+    },
+    {
+      "question": "Descreva um momento em que você trabalhou com designers e outros desenvolvedores para criar uma experiência de usuário consistente. Como você garantiu alinhamento no time?",
+      "evaluate": "Habilidade de trabalho em equipe e comunicação."
+    }
+  ]
+}

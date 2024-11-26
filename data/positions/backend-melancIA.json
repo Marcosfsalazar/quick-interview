@@ -1,0 +1,61 @@
+{
+  "company": "Melanc.IA",
+  "role": "backend developer",
+  "area": "tecnologia",
+  "job_description": "Estamos contratando! Backend Developer (Node.js)\n\nQuem somos?\nSomos uma startup inovadora. Nosso objetivo é transformar a indústria pecuaria por meio de tecnologia de ponta e oferecer experiências incríveis aos nossos usuários!\n\nModelo: PJ/CLT\nHorário: Flexível\n\nO que você vai fazer no time?\nDesenvolver e manter APIs RESTful e GraphQL escaláveis e seguras utilizando Node.js.\nGarantir performance, segurança e escalabilidade no backend.\nIntegrar bancos de dados (SQL e NoSQL) e criar soluções eficientes para manipulação de dados.\nImplementar soluções de autenticação e autorização robustas.\nCriar testes automatizados para garantir a confiabilidade do código.\nColaborar com outros desenvolvedores e times de produto para entregar funcionalidades de alta qualidade.\nParticipar de decisões arquiteturais para evoluir a infraestrutura da aplicação.\n\nO que buscamos em você?\nExperiência sólida com Node.js e desenvolvimento de APIs.\nFamiliaridade com Express, NestJS ou frameworks similares.\nConhecimento de bancos de dados (MongoDB, PostgreSQL, MySQL ou outros).\nHabilidade em lidar com sistemas distribuídos e arquitetura baseada em microserviços.\nConhecimento avançado de boas práticas de segurança em backend.\nCapacidade de escrever código limpo, organizado e reutilizável.\nBoa comunicação e habilidade de trabalhar em equipe.\nExperiência com ferramentas de versionamento (como Git) e integração contínua.\n\nDiferenciais (não obrigatórios):\nExperiência com TypeScript.\nConhecimento de testes automatizados com Jest ou Mocha.\nFamiliaridade com Docker e Kubernetes.\nExperiência com filas de mensagens (RabbitMQ, Kafka ou outros).\nConhecimento em monitoramento e logging de sistemas.\nInteresse ou experiência em otimização de sistemas de alta performance.\n\nO que oferecemos?\nSalário competitivo de acordo com o mercado.\nAmbiente descontraído, colaborativo e que incentiva o aprendizado constante.\nOportunidades de crescimento na empresa.\nProjetos desafiadores e impactantes.\nFlexibilidade para você organizar sua rotina e entregar o melhor.\n\nInteressado(a)?\nEnvie seu currículo e portfólio (ou GitHub) para [email@example.com] ou aplique diretamente aqui no LinkedIn. Caso conheça alguém que seria perfeito para essa vaga, compartilhe com eles!\n\nVamos juntos construir experiências digitais incríveis!",
+  "skills": [
+    "javascript",
+    "typescript",
+    "node.js",
+    "express",
+    "nestjs",
+    "graphql",
+    "mongodb",
+    "postgresql",
+    "mysql",
+    "docker",
+    "microservices",
+    "CI/CD",
+    "git",
+    "github",
+    "jest",
+    "mocha",
+    "testes automatizados"
+  ],
+  "aditionalContext": [
+    "Precisamos de um desenvolvedor com perfil técnico forte, boa capacidade de resolução de problemas e que se comunique com clareza. Avaliar a clareza de cada resposta do usuário."
+  ],
+  "seniorityLevel": ["mid", "senior"],
+  "complianceQuestions": [
+    {
+      "question": "Você está de acordo com o range salarial dessa vaga?",
+      "options": ["Sim", "Não"]
+    },
+    {
+      "question": "Tem preferência por um modelo de contratação?",
+      "options": ["CLT", "PJ", "Ambos"]
+    }
+  ],
+  "questions": [
+    {
+      "question": "Nos conte sobre um projeto em que você desenvolveu APIs escaláveis com Node.js. Quais foram os desafios técnicos e como você os resolveu?",
+      "evaluate": "Familiaridade com Node.js e desenvolvimento backend."
+    },
+    {
+      "question": "Como você costuma implementar autenticação e autorização em APIs? Descreva sua abordagem.",
+      "evaluate": "Experiência em segurança de APIs."
+    },
+    {
+      "question": "Nos conte sobre um caso em que você precisou otimizar a performance de uma API. Quais estratégias utilizou?",
+      "evaluate": "Habilidade em otimização de performance no backend."
+    },
+    {
+      "question": "Como você costuma lidar com sistemas distribuídos ou arquitetura baseada em microserviços? Fale sobre uma experiência prática.",
+      "evaluate": "Conhecimento em arquitetura escalável e sistemas distribuídos."
+    },
+    {
+      "question": "Descreva um momento em que você colaborou com outros times para resolver um problema técnico complexo. Como foi sua abordagem?",
+      "evaluate": "Habilidade de trabalho em equipe e comunicação."
+    }
+  ]
+}

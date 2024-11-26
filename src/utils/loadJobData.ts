@@ -6,6 +6,11 @@ interface LoadJobDataProps {
   fileName: string;
 }
 
+export function getJobFiles(): string[] {
+  const dataDirectory = path.join(process.cwd(), 'data/positions');
+  return fs.readdirSync(dataDirectory);
+}
+
 export const loadJobData = ({ fileName }: LoadJobDataProps) => {
   const filePath = path.join(
     process.cwd(),

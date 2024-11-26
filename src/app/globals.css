@@ -126,4 +126,10 @@ body {
     font-weight: bold;
     color: var(--appLightGreen);
   }
+
+  .test-item {
+    @apply w-11/12 border border-black h-20 rounded;
+    color: var(--appLightGreen);
+    background-color: rgba(10, 10, 10, 0.85);
+  }
 }
