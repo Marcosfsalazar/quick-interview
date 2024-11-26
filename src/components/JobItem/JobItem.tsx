@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { JobDescriptionProps } from '@/types';
 import { useModal } from '@/hooks/useModal';
+import JobDescription from '../JobDescription/JobDescription';
 
 interface JobItemProps {
   fileName: string;
@@ -12,7 +13,7 @@ interface JobItemProps {
 const JobItem = ({ fileName, jobData }: JobItemProps) => {
   const { openModal } = useModal();
   const handleOpenModal = () => {
-    openModal(<CustomModalContent />);
+    openModal(<JobDescription jobData={jobData} />);
   };
   return (
     <div className="test-item cursor-pointer flex justify-between">
@@ -21,7 +22,7 @@ const JobItem = ({ fileName, jobData }: JobItemProps) => {
         className="w-10/12 h-full"
       >
         <div className="hover:bg-appGreen p-4 hover:text-appPurple w-full h-full">
-          <h2 className="text-lg font-semibold">{jobData.role}</h2>
+          <h2 className="text-lg font-semibold">{jobData.role} →</h2>
           <p className="text-sm">{jobData.company}</p>
         </div>
       </Link>
@@ -31,15 +32,6 @@ const JobItem = ({ fileName, jobData }: JobItemProps) => {
       >
         info
       </button>
-    </div>
-  );
-};
-
-const CustomModalContent = () => {
-  return (
-    <div>
-      <h2>Conteúdo Personalizado</h2>
-      <p>Este é o conteúdo do modal.</p>
     </div>
   );
 };

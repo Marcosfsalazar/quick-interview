@@ -103,12 +103,15 @@ body {
 }
 
 .modal-container {
-  background-color: white;
+  background-color: var(--appPurple);
+  color: var(--appLightGreen);
   padding: 1rem;
   border-radius: 8px;
   position: relative;
-  max-width: 500px;
-  width: 100%;
+  max-width: 800px;
+  width: 98%;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 .modal-close {

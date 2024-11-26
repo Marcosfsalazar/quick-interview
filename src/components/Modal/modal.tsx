@@ -9,7 +9,7 @@ const Modal = () => {
   if (!isOpen) return null;
 
   return (
-    <div className="modal-overlay">
+    <div className="modal-overlay  overflow-y-scroll">
       <div className="modal-container">
         <button className="modal-close" onClick={closeModal}>
           &times;
