@@ -1,19 +1,24 @@
-import { MessageType } from '@/types';
+import { EvaluationData, JobDescriptionProps, MessageType } from '@/types';
 import { Message } from '../Message';
 import { Input } from '../Input/Index';
 import { useEffect, useRef, useState } from 'react';
 import Countdown from '../Countdown/Countdown';
+import { generatePDF } from '@/utils/generatePDF';
 
 interface ChatWindowProps {
   messages: MessageType[];
   currentStep: number;
   handleOptionSelect: (option: string, messageIndex: number) => void;
   handleAudioRecorded: (audioBlob: Blob) => void;
+  evaluationData?: EvaluationData;
+  jobData: JobDescriptionProps;
 }
 
 const ChatWindow = ({
   messages,
   currentStep,
+  evaluationData,
+  jobData,
   handleOptionSelect,
   handleAudioRecorded,
 }: ChatWindowProps) => {
@@ -43,6 +48,14 @@ const ChatWindow = ({
 
   const onTimeEnd = () => {
     setShowTimer(false);
+  };
+
+  const handleDownloadPDF = () => {
+    if (evaluationData) {
+      generatePDF(jobData, evaluationData);
+    } else {
+      console.error('Dados de avaliação não disponíveis.');
+    }
   };
 
   return (
@@ -101,6 +114,16 @@ const ChatWindow = ({
               setShowTimer={setShowTimer}
             />
           </Input.Root>
+        </div>
+      )}
+      {currentStep === 3 && evaluationData && (
+        <div className="mt-4 flex justify-center">
+          <button
+            onClick={handleDownloadPDF}
+            className="bg-appGreen text-white px-4 py-2 rounded hover:bg-green-600"
+          >
+            Baixar PDF da Avaliação
+          </button>
         </div>
       )}
     </div>

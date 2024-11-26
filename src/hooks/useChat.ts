@@ -54,6 +54,8 @@ const chatReducer = (state: ChatState, action: ChatAction): ChatState => {
         ...state,
         messages: state.messages.filter((msg) => !msg.isTyping),
       };
+    case ChatActionType.SET_EVALUATION_DATA:
+      return { ...state, evaluationData: action.payload };
     default:
       return state;
   }
@@ -137,6 +139,11 @@ export const useChat = (data: JobDescriptionProps) => {
       removeTypingIndicator();
       try {
         const evaluationData = JSON.parse(evaluation);
+        dispatch({
+          type: ChatActionType.SET_EVALUATION_DATA,
+          payload: evaluationData,
+        });
+
         const { questions } = evaluationData;
         if (Array.isArray(questions)) {
           questions.forEach((q) => {

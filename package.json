@@ -12,6 +12,7 @@
     "@ai-sdk/openai": "^1.0.4",
     "@tanstack/react-query": "^5.61.3",
     "ai": "^4.0.3",
+    "jspdf": "^2.5.2",
     "next": "14.2.18",
     "openai": "^4.73.0",
     "react": "^18",

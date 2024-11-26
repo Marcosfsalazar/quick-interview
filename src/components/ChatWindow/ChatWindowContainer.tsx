@@ -17,6 +17,8 @@ const ChatWindowContainer = ({ data }: ChatWindowContainerProps) => {
       currentStep={state.currentStep}
       handleOptionSelect={handleOptionSelect}
       handleAudioRecorded={handleAudioRecorded}
+      evaluationData={state.evaluationData}
+      jobData={data}
     />
   );
 };

@@ -17,6 +17,7 @@ export enum CHAT_ACTION {
   SET_OPTIONS = 'SET_OPTIONS',
   SET_CURRENT_QUESTION_INDEX = 'SET_CURRENT_QUESTION_INDEX',
   REMOVE_TYPING_INDICATOR = 'REMOVE_TYPING_INDICATOR',
+  SET_EVALUATION_DATA = 'SET_EVALUATION_DATA',
 }
 
 export type MessageType = {
@@ -41,7 +42,8 @@ export type ChatAction =
   | { type: CHAT_ACTION.ADD_QUESTION_RESPONSE; payload: QuestionResponse }
   | { type: CHAT_ACTION.SET_OPTIONS; payload: string[] | null }
   | { type: CHAT_ACTION.SET_CURRENT_QUESTION_INDEX; payload: number }
-  | { type: CHAT_ACTION.REMOVE_TYPING_INDICATOR };
+  | { type: CHAT_ACTION.REMOVE_TYPING_INDICATOR }
+  | { type: CHAT_ACTION.SET_EVALUATION_DATA; payload: EvaluationData };
 
 export interface ChatState {
   messages: MessageType[];
@@ -50,4 +52,19 @@ export interface ChatState {
   questionResponses: QuestionResponse[];
   options: string[] | null;
   currentQuestionIndex: number;
+  evaluationData?: EvaluationData;
+}
+
+export interface EvaluationQuestion {
+  question: string;
+  evaluate: string;
+  response: string;
+  report: string;
+  rating: number;
+  user_feedback: string;
+}
+
+export interface EvaluationData {
+  general_report: string;
+  questions: EvaluationQuestion[];
 }
