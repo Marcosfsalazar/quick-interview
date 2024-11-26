@@ -7,6 +7,7 @@ import {
   ComplianceAnswer,
   QuestionResponse,
   JobDescriptionProps,
+  EvaluationData,
 } from '@/types';
 import { MASTER_PROMPT } from '@/constants/prompts';
 import { useMutation } from '@tanstack/react-query';
@@ -109,7 +110,7 @@ export const useChat = (data: JobDescriptionProps) => {
   }, [data]);
 
   const evaluateResponsesMutation = useMutation<
-    string,
+    EvaluationData,
     Error,
     QuestionResponse[]
   >({
@@ -133,35 +134,34 @@ export const useChat = (data: JobDescriptionProps) => {
       }
 
       const result = await response.json();
-      return result.evaluation as string;
-    },
-    onSuccess: (evaluation: string) => {
-      removeTypingIndicator();
-      try {
-        const evaluationData = JSON.parse(evaluation);
-        dispatch({
-          type: ChatActionType.SET_EVALUATION_DATA,
-          payload: evaluationData,
-        });
 
-        const { questions } = evaluationData;
-        if (Array.isArray(questions)) {
-          questions.forEach((q) => {
-            const questionMessage: MessageType = {
-              sender: 'bot',
-              content: `**Pergunta:** ${q.question}\n**Feedback:** ${q.user_feedback}`,
-            };
-            addMessage(questionMessage);
-          });
-        }
+      let evaluationData: EvaluationData;
+      try {
+        evaluationData = JSON.parse(JSON.stringify(result.evaluation));
       } catch (error) {
         console.error('Error parsing evaluation JSON:', error);
-        const botMessage: MessageType = {
-          sender: 'bot',
-          content:
-            'Desculpe, ocorreu um erro ao processar a avaliação das suas respostas. Atualize a página e tente novamente!',
-        };
-        addMessage(botMessage);
+        console.error('Resposta recebida do OpenAI:', result.evaluation);
+        throw new Error('Invalid JSON response from OpenAI');
+      }
+
+      return evaluationData;
+    },
+    onSuccess: (evaluationData: EvaluationData) => {
+      removeTypingIndicator();
+      dispatch({
+        type: ChatActionType.SET_EVALUATION_DATA,
+        payload: evaluationData,
+      });
+
+      const { questions } = evaluationData;
+      if (Array.isArray(questions)) {
+        questions.forEach((q) => {
+          const questionMessage: MessageType = {
+            sender: 'bot',
+            content: `**Pergunta:** ${q.question}\n**Feedback:** ${q.user_feedback}`,
+          };
+          addMessage(questionMessage);
+        });
       }
     },
     onError: (error: Error) => {
@@ -169,9 +169,16 @@ export const useChat = (data: JobDescriptionProps) => {
       console.error('Error evaluating responses:', error);
       const botMessage: MessageType = {
         sender: 'bot',
-        content: 'Desculpe, ocorreu um erro ao avaliar suas respostas.',
+        content:
+          'Desculpe, ocorreu um erro ao avaliar suas respostas. Atualize a página e tente novamente!',
       };
       addMessage(botMessage);
+    },
+    retry: 3,
+    retryDelay: (attempt) => {
+      const delay = Math.min(1000 * 2 ** attempt, 30000);
+      console.log(`Tentativa de retry ${attempt + 1} em ${delay}ms`);
+      return delay;
     },
   });
 

@@ -25,7 +25,7 @@
   "complianceQuestions": [
     {
       "question": "você esta de acordo com o range salarial dessa vaga?",
-      "options": ["yes", "no"]
+      "options": ["Sim", "Não"]
     },
     {
       "question": "tem preferência por um modelo de contratação?",

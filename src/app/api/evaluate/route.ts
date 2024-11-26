@@ -26,15 +26,23 @@ export async function POST(request: Request) {
       messages,
     });
 
+    let responseText = response.text.trim();
+    responseText = responseText
+      .replace(/^```json\s*/, '')
+      .replace(/```$/, '')
+      .trim();
+
+    let evaluationData;
     try {
-      JSON.parse(response.text);
+      evaluationData = JSON.parse(responseText);
     } catch (error) {
-      console.error(error);
+      console.error('Erro ao parsear JSON:', error);
+      console.error('Resposta recebida do OpenAI:', responseText);
       throw new Error('Invalid JSON response from OpenAI');
     }
 
     return NextResponse.json({
-      evaluation: response.text,
+      evaluation: evaluationData,
     });
   } catch (error) {
     console.error('Error evaluating responses:', error);
