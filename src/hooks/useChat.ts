@@ -259,7 +259,8 @@ export const useChat = (data: JobDescriptionProps) => {
       setCurrentStep(3);
       const botMessage: MessageType = {
         sender: 'bot',
-        content: 'Obrigado por participar da entrevista!',
+        content:
+          'Obrigado por participar da entrevista! Aguarde enquanto geramos seu feedback!',
       };
       addMessage(botMessage);
     }
@@ -309,7 +310,8 @@ export const useChat = (data: JobDescriptionProps) => {
         setCurrentStep(3);
         const botMessage: MessageType = {
           sender: 'bot',
-          content: 'Obrigado por participar da entrevista!',
+          content:
+            'Obrigado por participar da entrevista! Aguarde enquanto geramos seu feedback!',
         };
         addMessage(botMessage);
 
