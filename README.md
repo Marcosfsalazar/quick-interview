@@ -1,36 +1,94 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Quick Interview
 
-## Getting Started
+Quick Interview é uma aplicação web desenvolvida com **Next.js** que permite a realização de entrevistar utilizando AI. A plataforma permite que através de uma descrição de vaga o user seja entrevistado por uma IA e ao final Receba um feedback de sua entrevista. Ao mesmo tempo a IA fornece um relatório especial para o gestor da vaga.
 
-First, run the development server:
+## 📋 Índice
+
+- [Tecnologias Utilizadas](#tecnologias-utilizadas)
+- [Pré-requisitos](#pré-requisitos)
+- [Instalação](#instalação)
+- [Configuração das Variáveis de Ambiente](#configuração-das-variáveis-de-ambiente)
+- [Execução do Projeto](#execução-do-projeto)
+- [Licença](#licença)
+
+## 🚀 Tecnologias Utilizadas
+
+- [Next.js](https://nextjs.org/) - Framework React para aplicações web.
+- [React](https://reactjs.org/) - Biblioteca JavaScript para construção de interfaces de usuário.
+- [Tailwind CSS](https://tailwindcss.com/) - Framework CSS utilitário.
+- [TypeScript](https://www.typescriptlang.org/) - Superset do JavaScript para tipagem estática.
+- [React Query](https://tanstack.com/query/latest) - Gerenciamento de estado e cache para dados assíncronos.
+- [OpenAI API](https://openai.com/api/) - Utilizado para transcrição de áudio e geração de avaliações.
+
+## 🔧 Pré-requisitos
+
+Antes de começar, verifique se você atendeu aos seguintes requisitos:
+
+- **Node.js** (versão 14 ou superior)
+- **Yarn** ou **npm**
+
+## 📦 Instalação
+
+1. **Clone o repositório**
+
+   ```bash
+   git clone https://github.com/Marcosfsalazar/quick-interview.git
+   ```
+
+2. **Acesse o diretório do projeto**
+
+   ```bash
+   cd quick-interview
+   ```
+
+3. **Instale as dependências**
+
+   Usando Yarn:
+
+   ```bash
+   yarn install
+   ```
+
+   Ou usando npm:
+
+   ```bash
+   npm install
+   ```
+
+## 🚧 Configuração das Variáveis de Ambiente
+
+O projeto utiliza a API da OpenAI para transcrição de áudio e geração de avaliações. Para isso, você precisa configurar a chave da API.
+
+1. Crie um arquivo `.env.local` na raiz do projeto
+
+   ```bash
+   touch .env.local
+   ```
+
+2. Adicione sua chave da API da OpenAI no arquivo `.env.local`
+
+   ```env
+   OPENAI_API_KEY=sk-...
+   ```
+
+## 🏃 Execução do Projeto
+
+Para iniciar o servidor de desenvolvimento, execute o seguinte comando:
+
+Usando Yarn:
+
+```bash
+yarn dev
+```
+
+Ou usando npm:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Acesse a aplicação em [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 👑 Licença
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Este projeto está licenciado sob a licença MIT.
