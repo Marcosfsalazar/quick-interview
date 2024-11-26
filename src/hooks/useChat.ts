@@ -245,7 +245,7 @@ export const useChat = (data: JobDescriptionProps) => {
       const botMessage: MessageType = {
         sender: 'bot',
         content:
-          'Agora vamos para as perguntas técnicas. Por favor, responda em áudio.',
+          'Agora vamos para as perguntas técnicas. Por favor, responda em áudio. Você irá ter 5 minutos para responder cada pergunta, começando agora.',
       };
       addMessage(botMessage);
       askNextTechnicalQuestion(0);

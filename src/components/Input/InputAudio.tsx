@@ -43,7 +43,6 @@ const InputAudio = ({
 
       mediaRecorderRef.current.start();
       setRecording(true);
-      setShowTimer(true);
     } catch (err) {
       console.error('Error accessing microphone:', err);
     }
@@ -72,7 +71,7 @@ const InputAudio = ({
     <div className="input-audio">
       <button
         className={`rounded-full p-2 ${
-          recording ? 'bg-red-400' : 'bg-appGreen'
+          recording ? 'bg-red-400 pulse-effect' : 'bg-appGreen'
         }`}
         onClick={recording ? stopRecording : startRecording}
       >

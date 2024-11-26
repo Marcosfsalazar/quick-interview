@@ -48,6 +48,13 @@ const ChatWindow = ({
     };
   }, [messages]);
 
+  useEffect(() => {
+    const lastMessage = messages[messages.length - 1];
+    if (lastMessage && lastMessage.isAudioResponse && !lastMessage.isTyping) {
+      setShowTimer(true);
+    }
+  }, [messages]);
+
   const onTimeEnd = () => {
     setShowTimer(false);
   };
