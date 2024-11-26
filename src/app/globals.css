@@ -120,4 +120,10 @@ body {
     padding-left: 8px;
     padding-right: 8px;
   }
+
+  .countdown-timer {
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--appLightGreen);
+  }
 }

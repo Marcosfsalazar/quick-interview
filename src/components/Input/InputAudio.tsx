@@ -1,11 +1,17 @@
 import Image from 'next/image';
-import { useState, useRef } from 'react';
+import { useState, useRef, Dispatch, SetStateAction, useEffect } from 'react';
 
 interface InputAudioProps {
   onRecorded: (audioBlob: Blob) => void;
+  setShowTimer: Dispatch<SetStateAction<boolean>>;
+  showTimer: boolean;
 }
 
-const InputAudio = ({ onRecorded }: InputAudioProps) => {
+const InputAudio = ({
+  onRecorded,
+  setShowTimer,
+  showTimer,
+}: InputAudioProps) => {
   const [recording, setRecording] = useState<boolean>(false);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
@@ -37,6 +43,7 @@ const InputAudio = ({ onRecorded }: InputAudioProps) => {
 
       mediaRecorderRef.current.start();
       setRecording(true);
+      setShowTimer(true);
     } catch (err) {
       console.error('Error accessing microphone:', err);
     }
@@ -49,23 +56,34 @@ const InputAudio = ({ onRecorded }: InputAudioProps) => {
     ) {
       mediaRecorderRef.current.stop();
       setRecording(false);
+      setShowTimer(false);
     } else {
       console.warn('MediaRecorder is not initialized or already stopped.');
     }
   };
 
+  useEffect(() => {
+    if (recording && !showTimer) {
+      stopRecording();
+    }
+  });
+
   return (
-    <button
-      className={`rounded-full p-2 ${recording ? 'bg-red-400' : 'bg-appGreen'}`}
-      onClick={recording ? stopRecording : startRecording}
-    >
-      <Image
-        src={`/icons/${recording ? 'stop' : 'mic'}.png`}
-        alt="microphone icon"
-        width={20}
-        height={20}
-      />
-    </button>
+    <div className="input-audio">
+      <button
+        className={`rounded-full p-2 ${
+          recording ? 'bg-red-400' : 'bg-appGreen'
+        }`}
+        onClick={recording ? stopRecording : startRecording}
+      >
+        <Image
+          src={`/icons/${recording ? 'stop' : 'mic'}.png`}
+          alt="microphone icon"
+          width={20}
+          height={20}
+        />
+      </button>
+    </div>
   );
 };
 

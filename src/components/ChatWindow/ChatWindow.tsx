@@ -1,7 +1,8 @@
 import { MessageType } from '@/types';
 import { Message } from '../Message';
 import { Input } from '../Input/Index';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import Countdown from '../Countdown/Countdown';
 
 interface ChatWindowProps {
   messages: MessageType[];
@@ -18,6 +19,7 @@ const ChatWindow = ({
 }: ChatWindowProps) => {
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const audioUrlsRef = useRef<string[]>([]);
+  const [showTimer, setShowTimer] = useState(false);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -38,6 +40,10 @@ const ChatWindow = ({
       audioUrlsRef.current = [];
     };
   }, [messages]);
+
+  const onTimeEnd = () => {
+    setShowTimer(false);
+  };
 
   return (
     <div className="container flex flex-col py-8 relative">
@@ -86,9 +92,16 @@ const ChatWindow = ({
         <div ref={messagesEndRef} />
       </div>
       {currentStep === 2 && (
-        <Input.Root>
-          <Input.Audio onRecorded={handleAudioRecorded} />
-        </Input.Root>
+        <div className="w-full flex justify-center items-center flex-col">
+          {showTimer && <Countdown initialTime={300} onComplete={onTimeEnd} />}
+          <Input.Root>
+            <Input.Audio
+              onRecorded={handleAudioRecorded}
+              showTimer={showTimer}
+              setShowTimer={setShowTimer}
+            />
+          </Input.Root>
+        </div>
       )}
     </div>
   );
