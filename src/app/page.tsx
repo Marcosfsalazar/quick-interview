@@ -1,7 +1,6 @@
 import JobItem from '@/components/JobItem/JobItem';
 import { JobDescriptionProps } from '@/types';
 import { getJobFiles, loadJobData } from '@/utils/loadJobData';
-import Image from 'next/image';
 
 export default function Home() {
   const jobFiles = getJobFiles();
@@ -31,21 +30,19 @@ export default function Home() {
         </div>
       </main>
       <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4 text-appLightGreen"
-          href="https://www.linkedin.com/in/marcosfernandessalazar/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          My Linkedin →
-        </a>
+        <div className="flex items-center justify-center flex-col">
+          <div className="text-appLightGreen italic text-sm">
+            by Marcos Salazar
+          </div>
+          <a
+            className="flex items-center text-sm gap-2 hover:underline hover:underline-offset-4 text-appLightGreen"
+            href="https://www.linkedin.com/in/marcosfernandessalazar/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Linkedin →
+          </a>
+        </div>
       </footer>
     </div>
   );
