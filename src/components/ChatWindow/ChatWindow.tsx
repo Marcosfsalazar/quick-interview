@@ -46,7 +46,7 @@ const ChatWindow = ({
   };
 
   return (
-    <div className="container flex flex-col py-8 relative">
+    <div className="container flex flex-col py-2 lg:py-8 relative lg:max-w-[768px] lg:highlight xl:max-w-[1024px] lg:p-14 lg:rounded">
       <div className="flex flex-col gap-4 mb-24 overflow-y-auto">
         {messages.map((msg, index) => (
           <Message.Root

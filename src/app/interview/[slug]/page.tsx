@@ -7,7 +7,7 @@ export default function Page({ params }: { params: { slug: string } }) {
   if (!jobData) return <></>;
 
   return (
-    <main className="h-screen flex justify-center py-8 px-2">
+    <main className="h-screen flex justify-center py-2 lg:py-8 px-2">
       <ChatWindowContainer data={jobData} />
     </main>
   );

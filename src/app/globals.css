@@ -132,4 +132,8 @@ body {
     color: var(--appLightGreen);
     background-color: rgba(10, 10, 10, 0.85);
   }
+
+  .highlight {
+    background-color: rgba(10, 10, 10, 0.2);
+  }
 }
