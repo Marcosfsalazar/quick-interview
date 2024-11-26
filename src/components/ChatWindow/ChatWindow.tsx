@@ -3,7 +3,8 @@ import { Message } from '../Message';
 import { Input } from '../Input/Index';
 import { useEffect, useRef, useState } from 'react';
 import Countdown from '../Countdown/Countdown';
-import { generatePDF } from '@/utils/generatePDF';
+import { useModal } from '@/hooks/useModal';
+import DownloadPdf from '../DownloadPdf/DownloadPdf';
 
 interface ChatWindowProps {
   messages: MessageType[];
@@ -25,6 +26,7 @@ const ChatWindow = ({
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const audioUrlsRef = useRef<string[]>([]);
   const [showTimer, setShowTimer] = useState(false);
+  const { openModal } = useModal();
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -50,9 +52,11 @@ const ChatWindow = ({
     setShowTimer(false);
   };
 
-  const handleDownloadPDF = () => {
+  const handleOpenDownloadModal = () => {
     if (evaluationData) {
-      generatePDF(jobData, evaluationData);
+      openModal(
+        <DownloadPdf evaluationData={evaluationData} jobData={jobData} />,
+      );
     } else {
       console.error('Dados de avaliação não disponíveis.');
     }
@@ -119,7 +123,7 @@ const ChatWindow = ({
       {currentStep === 3 && evaluationData && (
         <div className="mt-4 flex justify-center">
           <button
-            onClick={handleDownloadPDF}
+            onClick={handleOpenDownloadModal}
             className="bg-appGreen text-white px-4 py-2 rounded hover:bg-green-600"
           >
             Baixar PDF da Avaliação
