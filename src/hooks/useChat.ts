@@ -159,7 +159,7 @@ export const useChat = (data: JobDescriptionProps) => {
         const botMessage: MessageType = {
           sender: 'bot',
           content:
-            'Desculpe, ocorreu um erro ao processar a avaliação das suas respostas.',
+            'Desculpe, ocorreu um erro ao processar a avaliação das suas respostas. Atualize a página e tente novamente!',
         };
         addMessage(botMessage);
       }
